@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Altair Assistant — voice assistant for Windows</title>
+<meta name="description" content="Altair is a personal voice assistant for Windows 10/11. Say «Jarvis» — and the computer opens an app, plays music, sets a timer. Memory and skills live on your own disk.">
+<meta property="og:title" content="Altair Assistant — voice assistant for Windows">
+<meta property="og:description" content="Say «Jarvis» — and the computer does the rest. Voice, memory and skills — all local.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Altair Assistant">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="assets/og-en.png">
+<link rel="alternate" hreflang="ru" href="index.html">
+<link rel="alternate" hreflang="en" href="en.html">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/unbounded-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-text-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/styles.css">
+<script>document.documentElement.className += ' js';</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Altair Assistant",
+  "alternateName": "Altair",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Windows 10, Windows 11 (64-bit)",
+  "softwareVersion": "1.6.4",
+  "description": "A personal voice assistant for Windows: the wake word «Jarvis», window and process control, macros, memory and skills, smart home, and fully offline mode via Ollama.",
+  "url": "https://github.com/vaibecoder229/altair-downloads/releases",
+  "downloadUrl": "https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe",
+  "offers": [
+    { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Pro", "priceCurrency": "USD", "description": "Offline activation, RSA-2048 signature" }
+  ],
+  "inLanguage": ["ru", "en"]
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <img src="assets/favicon.svg" alt="" width="28" height="28">
+      Altair
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#how">How it works</a>
+      <a href="#features">Capabilities</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#license">Licenses</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-ghost btn-sm" href="https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe">Download</a>
+    <a class="lang-link" href="index.html" hreflang="ru" lang="ru">RU</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <canvas id="stars"></canvas>
+      <div class="hero-glow"></div>
+      <span class="aurora aurora-a"></span>
+      <span class="aurora aurora-b"></span>
+    </div>
+
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <h1>Say «Jarvis» — and the computer does the rest</h1>
+        <p class="hero-sub">A voice assistant for Windows. Opens programs, calculates, plays music, answers out loud — and keeps its memory on your own disk.</p>
+        <div class="hero-cta">
+          <a class="btn btn-signal" href="https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe">Download Altair</a>
+          <span class="hero-note">Free. Version 1.6.4, Windows 10 / 11.</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="chat" id="chat">
+          <div class="chat-line chat-line-user">
+            <p class="chat-bubble chat-user" id="chatUser">Jarvis, play music for work</p>
+          </div>
+          <div class="chat-line chat-line-alt">
+            <span class="chat-avatar" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="26" height="26"><rect width="28" height="28" rx="7" fill="#2E44FF"></rect><circle cx="14" cy="14" r="6.5" fill="#fff"></circle></svg>
+            </span>
+            <p class="chat-bubble chat-alt" id="chatAlt">Done, playing music</p>
+            <p class="chat-typing" id="chatTyping" aria-hidden="true"><span></span><span></span><span></span></p>
+          </div>
+        </div>
+        <img class="hero-shot" src="assets/img/01-chat.png" alt="Altair window: a conversation with the assistant about music and a timer" width="2160" height="1350">
+      </div>
+    </div>
+
+    <div class="dock">
+      <div class="wrap dock-inner">
+        <button class="mic" id="micBtn" type="button" aria-pressed="false" aria-label="Toggle listening demo">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <rect x="9" y="3" width="6" height="11" rx="3"></rect>
+            <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"></path>
+          </svg>
+        </button>
+        <canvas id="wave" class="dock-wave" aria-hidden="true"></canvas>
+        <span class="demo-label" id="micLabel">Click — the wave will catch your voice</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="ticker" aria-label="Voice command examples">
+    <div class="ticker-move">
+      <div class="ticker-row">
+        <button class="cmd" type="button" data-i="0">Jarvis, play music for work</button>
+        <button class="cmd" type="button" data-i="1">Jarvis, set a timer for 25 minutes</button>
+        <button class="cmd" type="button" data-i="2">Jarvis, show heavy processes</button>
+        <button class="cmd" type="button" data-i="3">Jarvis, work mode</button>
+        <button class="cmd" type="button" data-i="4">Jarvis, analyze my screen</button>
+        <button class="cmd" type="button" data-i="5">Jarvis, movie scene</button>
+        <button class="cmd" type="button" data-i="6">Jarvis, close the window</button>
+        <button class="cmd" type="button" data-i="7">Jarvis, remember how I make presentations</button>
+        <button class="cmd" type="button" data-i="8">Jarvis, play Spotify</button>
+        <button class="cmd" type="button" data-i="9">Jarvis, remind me in an hour</button>
+        <button class="cmd" type="button" data-i="10">Jarvis, take a screenshot</button>
+        <button class="cmd" type="button" data-i="11">Jarvis, what is on my schedule</button>
+      </div>
+      <div class="ticker-row" aria-hidden="true">
+        <span class="cmd" data-i="0">Jarvis, play music for work</span>
+        <span class="cmd" data-i="1">Jarvis, set a timer for 25 minutes</span>
+        <span class="cmd" data-i="2">Jarvis, show heavy processes</span>
+        <span class="cmd" data-i="3">Jarvis, work mode</span>
+        <span class="cmd" data-i="4">Jarvis, analyze my screen</span>
+        <span class="cmd" data-i="5">Jarvis, movie scene</span>
+        <span class="cmd" data-i="6">Jarvis, close the window</span>
+        <span class="cmd" data-i="7">Jarvis, remember how I make presentations</span>
+        <span class="cmd" data-i="8">Jarvis, play Spotify</span>
+        <span class="cmd" data-i="9">Jarvis, remind me in an hour</span>
+        <span class="cmd" data-i="10">Jarvis, take a screenshot</span>
+        <span class="cmd" data-i="11">Jarvis, what is on my schedule</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num" aria-hidden="true">1</span>
+          <h3>Say «Jarvis»</h3>
+          <p>The wake word brings the assistant up — or just press the mic button and speak.</p>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">2</span>
+          <h3>It listens</h3>
+          <p>Recognizes speech, understands the context of the conversation and turns your phrase into a command.</p>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">3</span>
+          <h3>It acts</h3>
+          <p>Opens a program, sets a timer, turns on the kitchen light — and answers with its voice.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="features">
+    <div class="wrap">
+      <h2>What it can do</h2>
+      <div class="tiles">
+        <article class="tile tile-cobalt tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"></path></svg>
+          </span>
+          <h3>Voice and characters</h3>
+          <p>Listens all the time and wakes on «Jarvis». Answers with a voice: classic Jarvis, GLaDOS, Postal Dude — or your own voice, cloned with RVC.</p>
+        </article>
+        <article class="tile tile-deep tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"></path><path d="M14 3v5h5M9 13h6M9 17h4"></path></svg>
+          </span>
+          <h3>Memory and skills</h3>
+          <p>«Remember how I make a presentation» — it saves the steps and finds them later on request.</p>
+          <p class="tile-code"><code>skills/learned_презентация.md</code></p>
+        </article>
+        <article class="tile tile-signal tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg>
+          </span>
+          <h3>Macros and if-then rules</h3>
+          <p>The phrase «work mode» opens everything you need in one command. It writes the rule itself, in plain language.</p>
+          <p class="tile-code"><code>if battery below 20% → quiet mode</code></p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="10" rx="1.5"></rect><rect x="8" y="9" width="13" height="10" rx="1.5"></rect></svg>
+          </span>
+          <h3>Windows and processes</h3>
+          <p>«Close the window», «show heavy processes» — by voice. Dangerous actions ask for confirmation.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path></svg>
+          </span>
+          <h3>Smart home</h3>
+          <p>Lights, outlets, climate and scenes via Home Assistant and MQTT: «movie scene».</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4 3 11l6 2 2 6z"></path><path d="M21 4l-9 15"></path></svg>
+          </span>
+          <h3>Telegram</h3>
+          <p>Control it from chat: voice messages, reminders, confirmation buttons.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11-2"></path><path d="M3 3l18 18"></path></svg>
+          </span>
+          <h3>Works offline</h3>
+          <p>Plug in Ollama — and the assistant needs neither the internet nor API keys.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="5.5"></rect><path d="M7 11v3M5.5 12.5h3M15.8 11.8h.01M18.2 14.2h.01"></path></svg>
+          </span>
+          <h3>Games and media</h3>
+          <p>Launches games from Steam, plays music in Yandex Music and Spotify, adjusts the volume.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h4l2-3h6l2 3h4v11H3z"></path><circle cx="12" cy="13" r="3.2"></circle></svg>
+          </span>
+          <h3>Screenshots and screen</h3>
+          <p>Takes a screenshot and explains what is on it — ask «analyze my screen».</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="commands">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What to say</h2>
+        <p class="sec-lead">Tap a phrase — the assistant answers in the chat above.</p>
+      </div>
+      <div class="cmd-groups">
+        <article class="cmd-card">
+          <h3>System and windows</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="2">Jarvis, show heavy processes</button>
+            <button class="cmd" type="button" data-i="6">Jarvis, close the window</button>
+            <button class="cmd" type="button" data-i="12">Jarvis, open downloads</button>
+            <button class="cmd" type="button" data-i="10">Jarvis, take a screenshot</button>
+            <button class="cmd" type="button" data-i="4">Jarvis, analyze my screen</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Music and media</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="0">Jarvis, play music for work</button>
+            <button class="cmd" type="button" data-i="8">Jarvis, play Spotify</button>
+            <button class="cmd" type="button" data-i="13">Jarvis, play the charts</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Smart home</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="5">Jarvis, movie scene</button>
+            <button class="cmd" type="button" data-i="14">Jarvis, turn on the kitchen light</button>
+            <button class="cmd" type="button" data-i="15">Jarvis, set 23 degrees in the bedroom</button>
+            <button class="cmd" type="button" data-i="16">Jarvis, turn everything off</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Memory and schedule</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="7">Jarvis, remember how I make presentations</button>
+            <button class="cmd" type="button" data-i="9">Jarvis, remind me in an hour</button>
+            <button class="cmd" type="button" data-i="11">Jarvis, what is on my schedule</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Smart rules</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="17">Jarvis, if battery drops below 20% — enable quiet mode</button>
+            <button class="cmd" type="button" data-i="18">Jarvis, when I plug in the charger — open the desktop</button>
+            <button class="cmd" type="button" data-i="19">Jarvis, if I don’t move the mouse for 10 minutes — lock the PC</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Quick answers</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="20">Jarvis, weather</button>
+            <button class="cmd" type="button" data-i="21">Jarvis, dollar rate</button>
+            <button class="cmd" type="button" data-i="22">Jarvis, briefing</button>
+            <button class="cmd" type="button" data-i="1">Jarvis, set a timer for 25 minutes</button>
+            <button class="cmd" type="button" data-i="3">Jarvis, work mode</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-deep" id="inside">
+    <div class="wrap">
+      <div class="band-head">
+        <h2>Memory lives on your disk</h2>
+        <p>Skills, history, rules and settings are local files in your folder. No registration, no accounts. Want zero cloud — plug in Ollama and work offline.</p>
+      </div>
+      <div class="shots">
+        <figure>
+          <img src="assets/img/01-chat.png" alt="Altair chat screen: a music request and a timer, the assistant's reply" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Chat</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/02-control.png" alt="Altair control screen: modes, triggers and schedule" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Control</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/03-skills.png" alt="Altair skills screen: saved assistant instructions" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Skills</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/04-settings.png" alt="Altair settings screen: voice, AI provider and license" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Settings</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="privacy">
+    <div class="wrap">
+      <h2>Privacy and security</h2>
+      <div class="tiles">
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"></path><path d="M4 7.5 12 12l8-4.5M12 12v9"></path></svg>
+          </span>
+          <h3>Your data — local files</h3>
+          <p>Memory, skills, history and settings are plain files in your folder. No registration, no accounts, no cloud.</p>
+        </article>
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path><circle cx="12" cy="15.5" r="1.6"></circle></svg>
+          </span>
+          <h3>Secrets locked by Windows</h3>
+          <p>API keys and tokens are encrypted with DPAPI (Data Protection API): only your Windows profile can read them. If encryption isn't available, Altair won't write the key in plain text.</p>
+        </article>
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11-2"></path><path d="M3 3l18 18"></path></svg>
+          </span>
+          <h3>Fully offline mode</h3>
+          <p>With Ollama you need neither the internet nor API keys. The license activates offline (RSA-2048 signature), no server required — no online checks.</p>
+        </article>
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6.5v5c0 5 3.5 8 8 9.5 4.5-1.5 8-4.5 8-9.5v-5z"></path><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg>
+          </span>
+          <h3>Dangerous actions need confirmation</h3>
+          <p>Closing windows, processes and system actions wait for your yes: ✅/❌ buttons in the chat.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="license">
+    <div class="wrap">
+      <h2>Licenses</h2>
+      <div class="plans">
+        <div class="plan">
+          <h3>Free</h3>
+          <p class="plan-for">Works right away, no key</p>
+          <ul>
+            <li>Chat and voice</li>
+            <li>Memory and skills</li>
+            <li>Schedule and macros</li>
+            <li>Base command packs</li>
+          </ul>
+        </div>
+        <div class="plan plan-pro">
+          <h3>Pro</h3>
+          <p class="plan-for">The key activates offline — RSA-2048 signature, no servers</p>
+          <ul>
+            <li>Everything in Free</li>
+            <li>Research agent</li>
+            <li>Browser agent</li>
+            <li>SSH access</li>
+            <li>Archive cracker</li>
+          </ul>
+        </div>
+      </div>
+      <p class="plan-note">The key goes in Settings, the «License» tab. Reset returns you to Free.</p>
+    </div>
+  </section>
+
+  <section class="section section-onboard" id="start">
+    <div class="wrap">
+      <h2>Ready in 30 seconds</h2>
+      <ol class="quick">
+        <li>
+          <span class="quick-time" aria-hidden="true">0:00</span>
+          <h3>Download and run</h3>
+          <p>One installer. It sets up Python and dependencies itself — nothing to do by hand.</p>
+        </li>
+        <li>
+          <span class="quick-time" aria-hidden="true">0:10</span>
+          <h3>Allow the microphone</h3>
+          <p>Only for your voice: recognition runs on your hardware, not in the cloud.</p>
+        </li>
+        <li>
+          <span class="quick-time" aria-hidden="true">0:20</span>
+          <h3>Say «Jarvis»</h3>
+          <p>The wake word brings the assistant up — or press the mic button at the bottom of the screen.</p>
+        </li>
+        <li>
+          <span class="quick-time" aria-hidden="true">0:30</span>
+          <h3>Give it commands</h3>
+          <p>«Open Photoshop», «set a timer», «movie scene» — it handles the rest.</p>
+        </li>
+      </ol>
+
+      <div class="tech" aria-label="Works with">
+        <span class="tech-item">Ollama</span>
+        <span class="tech-item">Home Assistant</span>
+        <span class="tech-item">MQTT</span>
+        <span class="tech-item">Steam</span>
+        <span class="tech-item">Spotify</span>
+        <span class="tech-item">Yandex Music</span>
+        <span class="tech-item">Telegram</span>
+        <span class="tech-item">RVC</span>
+      </div>
+
+      <div class="terminal" id="terminal">
+        <p class="term-head">jarvis@altair <span>— practice by typing a command</span></p>
+        <div class="term-log" id="termLog" aria-live="polite">
+          <p class="term-line term-info">Type a command — for example, «set a timer» or help.</p>
+        </div>
+        <form class="term-form" id="termForm">
+          <label class="term-prompt" for="termInput">›</label>
+          <input id="termInput" type="text" autocomplete="off" spellcheck="false" placeholder="type a command…" aria-label="Command for the assistant">
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-faq" id="faq">
+    <div class="wrap">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details class="faq-item" open>
+          <summary>Do I need the internet?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>No. Plug in Ollama — and the assistant runs fully offline, with no internet and no API keys. Without Ollama it uses any provider; the keys stay yours.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Where is my data stored?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Locally, in your folder: memory, skills, history, rules and settings — plain files. No registration, no accounts, no cloud.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What voice does the assistant have?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Classic Jarvis, GLaDOS, Postal Dude — or your own voice, cloned with RVC.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How is Free different from Pro?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Free includes chat, voice, memory, schedule and base command packs. Pro adds the research agent, browser agent, SSH access and the archive cracker. The Pro key activates offline; a reset returns you to Free.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Does it work with a smart home?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Yes: Home Assistant and MQTT — lights, outlets, climate and scenes by voice, for example «movie scene». Control goes direct, with no cloud in between.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What do I need to install it?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body">
+            <p>Windows 10 / 11, 64-bit. The installer brings the rest — nothing by hand.</p>
+            <ul class="req-list">
+              <li><b>Internet</b> — needed for the AI and voice</li>
+              <li><b>Microphone</b> — optional, for voice commands</li>
+              <li><b>FFmpeg</b> — optional, for better recording quality</li>
+              <li><b>Python</b> — installed automatically</li>
+            </ul>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Altair can't hear me<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Go to Settings → pick the right microphone → press «Test microphone».</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Error: «Python not found»<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Reinstall Altair and allow the installer to set up Python when asked.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>AI error<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Check the API key in Settings and make sure the key is active on your provider's website.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Antivirus warning<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Altair uses system APIs to control sound and windows, which can trigger false positives. Add the install folder to your antivirus exceptions.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>I want a different AI model<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>In Settings, switch the provider or enter your own Base URL and model.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero final-cta" id="download">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="aurora aurora-a"></span>
+      <span class="aurora aurora-b"></span>
+    </div>
+    <div class="wrap final-inner">
+      <h2>Download and say «Jarvis»</h2>
+      <a class="btn btn-signal" href="https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe">Download Altair</a>
+      <ul class="req-row" aria-label="System requirements">
+        <li>Windows 10 / 11, 64-bit</li>
+        <li>Python installs itself</li>
+        <li>Microphone and speakers</li>
+      </ul>
+      <p class="final-hint">If Windows shows SmartScreen — click «More info», then «Run anyway».</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Altair Assistant, 2026</span>
+    <nav aria-label="Footer links">
+      <a href="#how">How it works</a>
+      <a href="#features">Capabilities</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/vaibecoder229/altair-downloads/releases">Releases</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-btn lb-close" type="button" data-lb-close aria-label="Close viewer">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+  </button>
+  <button class="lb-btn lb-prev" type="button" data-lb-prev aria-label="Previous screenshot">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+  </button>
+  <figure class="lb-stage">
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <button class="lb-btn lb-next" type="button" data-lb-next aria-label="Next screenshot">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+  </button>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

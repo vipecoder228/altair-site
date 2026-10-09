@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Altair Assistant — голосовой ассистент для Windows</title>
+<meta name="description" content="Altair — персональный голосовой ассистент для Windows 10/11. Скажи «Джарвис» — и компьютер откроет программу, включит музыку, поставит таймер. Память и навыки хранятся на твоём диске.">
+<meta property="og:title" content="Altair Assistant — голосовой ассистент для Windows">
+<meta property="og:description" content="Скажи «Джарвис» — и компьютер сделает сам. Голос, память и навыки локально.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-ru.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Altair Assistant">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="assets/og-ru.png">
+<link rel="alternate" hreflang="ru" href="index.html">
+<link rel="alternate" hreflang="en" href="en.html">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/unbounded-800-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/unbounded-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-text-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-text-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/styles.css">
+<script>document.documentElement.className += ' js';</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Altair Assistant",
+  "alternateName": "Altair",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Windows 10, Windows 11 (64-bit)",
+  "softwareVersion": "1.6.4",
+  "description": "Персональный голосовой ассистент для Windows: ключевая фраза «Джарвис», управление окнами и процессами, макросы, память и навыки, умный дом, работа офлайн через Ollama.",
+  "url": "https://github.com/vaibecoder229/altair-downloads/releases",
+  "downloadUrl": "https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe",
+  "offers": [
+    { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "RUB" },
+    { "@type": "Offer", "name": "Pro", "priceCurrency": "RUB", "description": "Активация офлайн, подпись RSA-2048" }
+  ],
+  "inLanguage": ["ru", "en"]
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <img src="assets/favicon.svg" alt="" width="28" height="28">
+      Altair
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#how">Как это работает</a>
+      <a href="#features">Возможности</a>
+      <a href="#privacy">Приватность</a>
+      <a href="#license">Лицензии</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a class="btn btn-ghost btn-sm" href="https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe">Скачать</a>
+    <a class="lang-link" href="en.html" hreflang="en" lang="en">EN</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <canvas id="stars"></canvas>
+      <div class="hero-glow"></div>
+      <span class="aurora aurora-a"></span>
+      <span class="aurora aurora-b"></span>
+    </div>
+
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <h1>Скажи «Джарвис» — и компьютер сделает сам</h1>
+        <p class="hero-sub">Голосовой ассистент для Windows. Открывает программы, считает, играет музыку, отвечает голосом — и хранит память о тебе на твоём диске.</p>
+        <div class="hero-cta">
+          <a class="btn btn-signal" href="https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe">Скачать Altair</a>
+          <span class="hero-note">Бесплатно. Версия 1.6.4, Windows 10 / 11.</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="chat" id="chat">
+          <div class="chat-line chat-line-user">
+            <p class="chat-bubble chat-user" id="chatUser">Джарвис, включи музыку для работы</p>
+          </div>
+          <div class="chat-line chat-line-alt">
+            <span class="chat-avatar" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="26" height="26"><rect width="28" height="28" rx="7" fill="#2E44FF"></rect><circle cx="14" cy="14" r="6.5" fill="#fff"></circle></svg>
+            </span>
+            <p class="chat-bubble chat-alt" id="chatAlt">Готово, включаю музыку</p>
+            <p class="chat-typing" id="chatTyping" aria-hidden="true"><span></span><span></span><span></span></p>
+          </div>
+        </div>
+        <img class="hero-shot" src="assets/img/01-chat.png" alt="Окно Altair: разговор с ассистентом, запрос на музыку и таймер" width="2160" height="1350">
+      </div>
+    </div>
+
+    <div class="dock">
+      <div class="wrap dock-inner">
+        <button class="mic" id="micBtn" type="button" aria-pressed="false" aria-label="Включить демонстрацию прослушивания">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <rect x="9" y="3" width="6" height="11" rx="3"></rect>
+            <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"></path>
+          </svg>
+        </button>
+        <canvas id="wave" class="dock-wave" aria-hidden="true"></canvas>
+        <span class="demo-label" id="micLabel">Нажми — и волна поймает твой голос</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="ticker" aria-label="Примеры голосовых команд">
+    <div class="ticker-move">
+      <div class="ticker-row">
+        <button class="cmd" type="button" data-i="0">Джарвис, включи музыку для работы</button>
+        <button class="cmd" type="button" data-i="1">Джарвис, поставь таймер на 25 минут</button>
+        <button class="cmd" type="button" data-i="2">Джарвис, покажи тяжёлые процессы</button>
+        <button class="cmd" type="button" data-i="3">Джарвис, режим работы</button>
+        <button class="cmd" type="button" data-i="4">Джарвис, разбери экран</button>
+        <button class="cmd" type="button" data-i="5">Джарвис, сцена кино</button>
+        <button class="cmd" type="button" data-i="6">Джарвис, закрой окно</button>
+        <button class="cmd" type="button" data-i="7">Джарвис, запомни, как я делаю презентацию</button>
+        <button class="cmd" type="button" data-i="8">Джарвис, включи Spotify</button>
+        <button class="cmd" type="button" data-i="9">Джарвис, напомни через час</button>
+        <button class="cmd" type="button" data-i="10">Джарвис, сделай скриншот</button>
+        <button class="cmd" type="button" data-i="11">Джарвис, что у меня в расписании</button>
+      </div>
+      <div class="ticker-row" aria-hidden="true">
+        <span class="cmd" data-i="0">Джарвис, включи музыку для работы</span>
+        <span class="cmd" data-i="1">Джарвис, поставь таймер на 25 минут</span>
+        <span class="cmd" data-i="2">Джарвис, покажи тяжёлые процессы</span>
+        <span class="cmd" data-i="3">Джарвис, режим работы</span>
+        <span class="cmd" data-i="4">Джарвис, разбери экран</span>
+        <span class="cmd" data-i="5">Джарвис, сцена кино</span>
+        <span class="cmd" data-i="6">Джарвис, закрой окно</span>
+        <span class="cmd" data-i="7">Джарвис, запомни, как я делаю презентацию</span>
+        <span class="cmd" data-i="8">Джарвис, включи Spotify</span>
+        <span class="cmd" data-i="9">Джарвис, напомни через час</span>
+        <span class="cmd" data-i="10">Джарвис, сделай скриншот</span>
+        <span class="cmd" data-i="11">Джарвис, что у меня в расписании</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="wrap">
+      <h2>Как это работает</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num" aria-hidden="true">1</span>
+          <h3>Скажи «Джарвис»</h3>
+          <p>Ключевая фраза будит ассистента — или просто нажми кнопку микрофона и говори.</p>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">2</span>
+          <h3>Он слушает</h3>
+          <p>Распознаёт речь, понимает контекст разговора и превращает фразу в команду.</p>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">3</span>
+          <h3>Он делает</h3>
+          <p>Открывает программу, ставит таймер, включает свет на кухне — и отвечает голосом.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="features">
+    <div class="wrap">
+      <h2>Что он умеет</h2>
+      <div class="tiles">
+        <article class="tile tile-cobalt tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"></path></svg>
+          </span>
+          <h3>Голос и персонажи</h3>
+          <p>Слушает постоянно и просыпается на «Джарвис». Отвечает голосом: классический Джарвис, GLaDOS, Postal Dude — или свой голос, клонированный через RVC.</p>
+        </article>
+        <article class="tile tile-deep tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"></path><path d="M14 3v5h5M9 13h6M9 17h4"></path></svg>
+          </span>
+          <h3>Память и навыки</h3>
+          <p>«Запомни, как я делаю презентацию» — и он сохранит шаги, а потом найдёт их по запросу.</p>
+          <p class="tile-code"><code>skills/learned_презентация.md</code></p>
+        </article>
+        <article class="tile tile-signal tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg>
+          </span>
+          <h3>Макросы и правила «если-то»</h3>
+          <p>Фраза «режим работы» открывает всё нужное одной командой. Правило он составит сам, обычным языком.</p>
+          <p class="tile-code"><code>если заряд ниже 20% → тихий режим</code></p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="10" rx="1.5"></rect><rect x="8" y="9" width="13" height="10" rx="1.5"></rect></svg>
+          </span>
+          <h3>Окна и процессы</h3>
+          <p>«Закрой окно», «покажи тяжёлые процессы» — голосом. Опасное действие попросит подтверждения.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path></svg>
+          </span>
+          <h3>Умный дом</h3>
+          <p>Свет, розеты, климат и сцены через Home Assistant и MQTT: «сцена кино».</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4 3 11l6 2 2 6z"></path><path d="M21 4l-9 15"></path></svg>
+          </span>
+          <h3>Telegram</h3>
+          <p>Управляй из чата: голосовые сообщения, напоминания, кнопки подтверждения.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11-2"></path><path d="M3 3l18 18"></path></svg>
+          </span>
+          <h3>Работает офлайн</h3>
+          <p>Подключил Ollama — и ассистенту не нужны ни интернет, ни ключи API.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="5.5"></rect><path d="M7 11v3M5.5 12.5h3M15.8 11.8h.01M18.2 14.2h.01"></path></svg>
+          </span>
+          <h3>Игры и медиа</h3>
+          <p>Запускает игры из Steam, включает музыку в Яндекс.Музыке и Spotify, крутит громкость.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h4l2-3h6l2 3h4v11H3z"></path><circle cx="12" cy="13" r="3.2"></circle></svg>
+          </span>
+          <h3>Скриншоты и экран</h3>
+          <p>Сделает скриншот и объяснит, что на нём, — попроси «разбери экран».</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="commands">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Что сказать</h2>
+        <p class="sec-lead">Нажми на фразу — ассистент ответит в чате наверху.</p>
+      </div>
+      <div class="cmd-groups">
+        <article class="cmd-card">
+          <h3>Система и окна</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="2">Джарвис, покажи тяжёлые процессы</button>
+            <button class="cmd" type="button" data-i="6">Джарвис, закрой окно</button>
+            <button class="cmd" type="button" data-i="12">Джарвис, открой загрузки</button>
+            <button class="cmd" type="button" data-i="10">Джарвис, сделай скриншот</button>
+            <button class="cmd" type="button" data-i="4">Джарвис, разбери экран</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Музыка и медиа</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="0">Джарвис, включи музыку для работы</button>
+            <button class="cmd" type="button" data-i="8">Джарвис, включи Spotify</button>
+            <button class="cmd" type="button" data-i="13">Джарвис, включи чарт</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Умный дом</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="5">Джарвис, сцена кино</button>
+            <button class="cmd" type="button" data-i="14">Джарвис, включи свет на кухне</button>
+            <button class="cmd" type="button" data-i="15">Джарвис, поставь 23 градуса в спальне</button>
+            <button class="cmd" type="button" data-i="16">Джарвис, выключи всё</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Память и расписание</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="7">Джарвис, запомни, как я делаю презентацию</button>
+            <button class="cmd" type="button" data-i="9">Джарвис, напомни через час</button>
+            <button class="cmd" type="button" data-i="11">Джарвис, что у меня в расписании</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Умные правила</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="17">Джарвис, если заряд ниже 20% — включи тихий режим</button>
+            <button class="cmd" type="button" data-i="18">Джарвис, когда подключу зарядку — открой рабочий стол</button>
+            <button class="cmd" type="button" data-i="19">Джарвис, если я не двигаю мышь 10 минут — заблокируй компьютер</button>
+          </div>
+        </article>
+        <article class="cmd-card">
+          <h3>Быстрые ответы</h3>
+          <div class="cmd-chips">
+            <button class="cmd" type="button" data-i="20">Джарвис, погода</button>
+            <button class="cmd" type="button" data-i="21">Джарвис, курс доллара</button>
+            <button class="cmd" type="button" data-i="22">Джарвис, брифинг</button>
+            <button class="cmd" type="button" data-i="1">Джарвис, поставь таймер на 25 минут</button>
+            <button class="cmd" type="button" data-i="3">Джарвис, режим работы</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-deep" id="inside">
+    <div class="wrap">
+      <div class="band-head">
+        <h2>Память живёт на твоём диске</h2>
+        <p>Навыки, история, правила и настройки — локальные файлы в твоей папке. Без регистрации и аккаунтов. Хочешь совсем без облака — подключил Ollama и работаешь офлайн.</p>
+      </div>
+      <div class="shots">
+        <figure>
+          <img src="assets/img/01-chat.png" alt="Экран «Диалог с Altair»: запрос про музыку и таймер, ответ ассистента" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Диалог</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/02-control.png" alt="Экран «Управление»: режимы, триггеры и расписание" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Управление</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/03-skills.png" alt="Экран «Навыки»: сохранённые инструкции ассистента" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Навыки</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/04-settings.png" alt="Экран настроек: голос, провайдер ИИ и лицензия" width="2160" height="1350" loading="lazy" decoding="async">
+          <figcaption>Настройки</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="privacy">
+    <div class="wrap">
+      <h2>Приватность и безопасность</h2>
+      <div class="tiles">
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"></path><path d="M4 7.5 12 12l8-4.5M12 12v9"></path></svg>
+          </span>
+          <h3>Твои данные — локальные файлы</h3>
+          <p>Память, навыки, история и настройки лежат обычными файлами в твоей папке. Без регистрации, аккаунтов и облаков.</p>
+        </article>
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path><circle cx="12" cy="15.5" r="1.6"></circle></svg>
+          </span>
+          <h3>Секреты под замком Windows</h3>
+          <p>API-ключи и токены шифруются через DPAPI (Data Protection API): прочитать их сможет только твой профиль Windows. Если шифрование недоступно — Altair не пишет ключ открытым текстом.</p>
+        </article>
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11-2"></path><path d="M3 3l18 18"></path></svg>
+          </span>
+          <h3>Полный офлайн-режим</h3>
+          <p>С Ollama ни интернет, ни API-ключи не нужны. Лицензия активируется офлайн (подпись RSA-2048), сервер не нужен — онлайн-проверок нет.</p>
+        </article>
+        <article class="tile tile-wide">
+          <span class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6.5v5c0 5 3.5 8 8 9.5 4.5-1.5 8-4.5 8-9.5v-5z"></path><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg>
+          </span>
+          <h3>Опасные действия — с подтверждением</h3>
+          <p>Закрытие окон, процессы и системные действия требуют твоего «да»: кнопки ✅/❌ в чате.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="license">
+    <div class="wrap">
+      <h2>Лицензии</h2>
+      <div class="plans">
+        <div class="plan">
+          <h3>Free</h3>
+          <p class="plan-for">Работает сразу, без ключа</p>
+          <ul>
+            <li>Чат и голос</li>
+            <li>Память и навыки</li>
+            <li>Расписание и макросы</li>
+            <li>Базовые пакеты команд</li>
+          </ul>
+        </div>
+        <div class="plan plan-pro">
+          <h3>Pro</h3>
+          <p class="plan-for">Ключ активируется офлайн — подпись RSA-2048, без серверов</p>
+          <ul>
+            <li>Всё, что есть в Free</li>
+            <li>Research-агент</li>
+            <li>Браузер-агент</li>
+            <li>SSH-доступ</li>
+            <li>Кракер архивов</li>
+          </ul>
+        </div>
+      </div>
+      <p class="plan-note">Ключ вставляется в настройках, вкладка «Лицензия». Сброс возвращает Free.</p>
+    </div>
+  </section>
+
+  <section class="section section-onboard" id="start">
+    <div class="wrap">
+      <h2>Всё готово за 30 секунд</h2>
+      <ol class="quick">
+        <li>
+          <span class="quick-time" aria-hidden="true">0:00</span>
+          <h3>Скачай и запусти</h3>
+          <p>Один установщик. Python и зависимости поставит сам — руками ничего не нужно.</p>
+        </li>
+        <li>
+          <span class="quick-time" aria-hidden="true">0:10</span>
+          <h3>Разреши микрофон</h3>
+          <p>Только для голоса: распознавание идёт на твоём железе, не в облаке.</p>
+        </li>
+        <li>
+          <span class="quick-time" aria-hidden="true">0:20</span>
+          <h3>Скажи «Джарвис»</h3>
+          <p>Ключевая фраза будит ассистента — или нажми кнопку микрофона внизу экрана.</p>
+        </li>
+        <li>
+          <span class="quick-time" aria-hidden="true">0:30</span>
+          <h3>Говори команды</h3>
+          <p>«Открой Photoshop», «поставь таймер», «сцена кино» — дальше он сделает сам.</p>
+        </li>
+      </ol>
+
+      <div class="tech" aria-label="Работает с">
+        <span class="tech-item">Ollama</span>
+        <span class="tech-item">Home Assistant</span>
+        <span class="tech-item">MQTT</span>
+        <span class="tech-item">Steam</span>
+        <span class="tech-item">Spotify</span>
+        <span class="tech-item">Яндекс.Музыка</span>
+        <span class="tech-item">Telegram</span>
+        <span class="tech-item">RVC</span>
+      </div>
+
+      <div class="terminal" id="terminal">
+        <p class="term-head">jarvis@altair <span>— потренируйся, введя команду</span></p>
+        <div class="term-log" id="termLog" aria-live="polite">
+          <p class="term-line term-info">Напиши команду — например, «поставь таймер» или help.</p>
+        </div>
+        <form class="term-form" id="termForm">
+          <label class="term-prompt" for="termInput">›</label>
+          <input id="termInput" type="text" autocomplete="off" spellcheck="false" placeholder="команда ассистенту…" aria-label="Команда ассистенту">
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-faq" id="faq">
+    <div class="wrap">
+      <h2>Вопросы</h2>
+      <div class="faq">
+        <details class="faq-item" open>
+          <summary>Нужен ли интернет?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Нет. Подключил Ollama — и ассистент работает полностью офлайн, без интернета и ключей API. Без Ollama — использует любой провайдер, ключи остаются твоими.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Где хранятся мои данные?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Локально, в твоей папке: память, навыки, история, правила и настройки — обычные файлы. Без регистрации, аккаунтов и облаков.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Какой голос будет у ассистента?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Классический Джарвис, GLaDOS, Postal Dude — или собственный голос, клонированный через RVC.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Чем Free отличается от Pro?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Free — чат, голос, память, расписание и базовые пакеты команд. Pro — research-агент, браузер-агент, SSH-доступ и кракер архивов. Ключ Pro активируется офлайн, сброс возвращает Free.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Работает ли с умным домом?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Да: Home Assistant и MQTT — свет, розетки, климат и сцены голосом, например «сцена кино». Управление идёт напрямую, без облака.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Что нужно для установки?<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body">
+            <p>Windows 10 / 11, 64-бит. Остальное поставит установщик — руками ничего не нужно.</p>
+            <ul class="req-list">
+              <li><b>Интернет</b> — нужен для ИИ и голоса</li>
+              <li><b>Микрофон</b> — опционально, для голосовых команд</li>
+              <li><b>FFmpeg</b> — опционально, для лучшего качества записи</li>
+              <li><b>Python</b> — устанавливается автоматически</li>
+            </ul>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Altair не слышит меня<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Зайди в Настройки → выбери нужный микрофон → нажми «Проверить микрофон».</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Ошибка «Python не найден»<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Переустанови Altair и при запросе разреши установку Python.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Ошибка ИИ<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Проверь API-ключ в Настройках и убедись, что ключ активен на сайте провайдера.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Предупреждение антивируса<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Altair использует системные API для управления звуком и окнами — это может вызывать ложное срабатывание. Добавь папку установки в исключения антивируса.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Хочу другую модель ИИ<span class="faq-mark" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>В Настройках смени провайдера или введи свой Base URL и модель.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero final-cta" id="download">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="aurora aurora-a"></span>
+      <span class="aurora aurora-b"></span>
+    </div>
+    <div class="wrap final-inner">
+      <h2>Скачай и скажи «Джарвис»</h2>
+      <a class="btn btn-signal" href="https://github.com/vaibecoder229/altair-downloads/releases/latest/download/Altair-Setup.exe">Скачать Altair</a>
+      <ul class="req-row" aria-label="Системные требования">
+        <li>Windows 10 / 11, 64-бит</li>
+        <li>Python поставит установщик</li>
+        <li>Микрофон и динамики</li>
+      </ul>
+      <p class="final-hint">Если Windows покажет SmartScreen — нажми «Подробнее», затем «Выполнить в любом случае».</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Altair Assistant, 2026</span>
+    <nav aria-label="Ссылки в подвале">
+      <a href="#how">Как это работает</a>
+      <a href="#features">Возможности</a>
+      <a href="#faq">Вопросы</a>
+      <a href="https://github.com/vaibecoder229/altair-downloads/releases">Релизы</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-btn lb-close" type="button" data-lb-close aria-label="Закрыть просмотр">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+  </button>
+  <button class="lb-btn lb-prev" type="button" data-lb-prev aria-label="Предыдущий скриншот">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+  </button>
+  <figure class="lb-stage">
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <button class="lb-btn lb-next" type="button" data-lb-next aria-label="Следующий скриншот">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+  </button>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
