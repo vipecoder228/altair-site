@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vipecoder228.github.io/altair-site/sitemap.xml
